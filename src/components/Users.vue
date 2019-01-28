@@ -107,11 +107,11 @@ export default {
     },
     mounted() {
         const url = "https://jsonplaceholder.typicode.com/users";
-        const localurl = 'http://localhost:3000/users'
-        // json-server --watch typiecode.json -- cd to assets folder and run this command for local api.
+        // const localurl = 'http://localhost:3000/users'
+        // json-server --watch typiecode.json -- cd to assets folder and run this command to use local api.
         var self = this;
         axios
-            .get(localurl)
+            .get(url)
             .then(function (response) {
                 self.users = response.data;
                 console.log("Data: ", response.data);
@@ -143,8 +143,8 @@ export default {
                 zipcode: this.form.zipcode,
             }
             console.log(newUser)
-            // axios.post('https://jsonplaceholder.typicode.com/users', newUser)
-            axios.post('http://localhost:3000/users', newUser) // post request to local rest api through axios - Adds user!
+            axios.post('https://jsonplaceholder.typicode.com/users', newUser)
+            // axios.post('http://localhost:3000/users', newUser) // post request to local rest api through axios - Adds user!
                 .then(function (response) {
                     console.log(response, "Success")
                     window.location.reload();
@@ -160,9 +160,9 @@ export default {
                 type: 'warning'
             }).then(() => {
                 rows.splice(index, 1);
-                // axios.delete('https://jsonplaceholder.typicode.com/users/' + userID) 
-                let userID = index + 1 // Requires better function to accuratley get userID
-                axios.delete('http://localhost:3000/users/' + userID)
+                axios.delete('https://jsonplaceholder.typicode.com/users/' + userID) 
+                // let userID = index + 1
+                // axios.delete('http://localhost:3000/users/' + userID)
                 this.$message({
                     type: 'success',
                     message: 'Delete completed'
