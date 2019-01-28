@@ -1,12 +1,11 @@
 <template>
 <div id="app">
-    <user> </user>
+    <user></user>
 </div>
 </template>
 
 <script>
 import user from './components/Users.vue'
-
 export default {
     name: 'app',
     components: {
