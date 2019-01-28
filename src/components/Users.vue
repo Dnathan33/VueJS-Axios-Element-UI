@@ -5,7 +5,6 @@
             <el-menu class="el-menu-demo" mode="horizontal" @select="handleSelect">
                 <el-menu-item index="1">Logo</el-menu-item>
                 <el-menu-item index="2" style="float: right">
-                    <!-- v-model="search"   :default-active="activeIndex" -->
                     <el-input size="medium" placeholder="Type to search" />
                 </el-menu-item>
             </el-menu>
@@ -14,7 +13,6 @@
     <el-container>
         <el-main>
             <el-table ref="multipleTable" :data="users" stripe style="width: 100%">
-                <!-- @selection-change="handleSelectionChange"> -->
                 <el-table-column prop="id" width="40">
                 </el-table-column>
                 <el-table-column label="Full Name">
@@ -43,17 +41,14 @@
                     </template>
                     <template slot-scope="scope">
                         <el-button-group>
-                            <!-- <el-button type="primary" @click="disabled = !disabled">Edit</el-button> -->
                             <el-button type="danger" prop="id" icon="el-icon-delete" @click.native.prevent="handleDeleteUser(scope.$index, users)">Delete</el-button>
                         </el-button-group>
                     </template>
                 </el-table-column>
             </el-table>
-
         </el-main>
         <el-dialog class="New user dialog" title="New User" width="40%" :visible.sync="addUserDialogVisible" :before-close="handleClose">
             <el-form ref="form" :model="form" label-width="120px">
-                <div class="Personal info">
                     <el-form-item label="Full Name">
                         <el-input v-model="form.name"></el-input>
                     </el-form-item>
@@ -66,8 +61,6 @@
                     <el-form-item label="Phone">
                         <el-input v-model="form.phone"></el-input>
                     </el-form-item>
-                </div>
-                <div class="Address">
                     <el-form-item label="Address">
                         <el-input v-model="form.streetAddress"></el-input>
                     </el-form-item>
@@ -79,69 +72,18 @@
                     <el-form-item label="">
                         <el-input placeholder="Zipcode" v-model="form.zipcode"></el-input>
                     </el-form-item>
-                </div>
                 <el-form-item>
                     <el-button style="float: left" type="primary" @click="handleAddUser">Create</el-button>
                     <el-button style="float: left">Cancel</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
-        <el-dialog :data="users" class="Edit user dialog" title="Edit User" width="45%" :visible.sync="editUserDialogVisible" :before-close="handleClose">
-            <el-form ref="user_edit" :model="user_edit" label-width="120px">
-                <div class="Personal info">
-                    <!-- <template slot-scope="scope"> -->
-                    <el-form-item label="Full Name">
-                        <el-input v-model="user_edit.name"></el-input>
-                    </el-form-item>
-                    <!-- </template> -->
-                    <el-form-item label="Username">
-                        <el-input v-model="user_edit.username"></el-input>
-                    </el-form-item>
-                    <el-form-item :data="users" label="WAS">
-                        <!-- <template slot-scope="scope">
-                            <el-input v-model="scope.row.name"></el-input>
-                        </template> -->
-                        <el-input v-model="users.name"></el-input>
-
-                    </el-form-item>
-                    <el-form-item label="Email">
-                        <el-input v-model="user_edit.email"></el-input>
-                    </el-form-item>
-                    <el-form-item label="Phone">
-                        <el-input v-model="user_edit.phone"></el-input>
-                    </el-form-item>
-                </div>
-                <div class="Address">
-                    <el-form-item label="Address">
-                        <el-input v-model="user_edit.streetAddress"></el-input>
-                    </el-form-item>
-                    <el-form-item label="">
-                        <el-input placeholder="City" v-model="user_edit.city" class="input-with-select">
-                            <el-select v-model="user_edit.state" slot="append" placeholder="State"></el-select>
-                        </el-input>
-                    </el-form-item>
-                    <el-form-item label="">
-                        <el-input placeholder="Zipcode" v-model="user_edit.zipcode"></el-input>
-                    </el-form-item>
-                </div>
-                <el-form-item>
-                    <template slot-scope="scope">
-                        <el-button style="float: left" type="primary" @click="handleEditUser()">Submit</el-button>
-                        <el-button style="float: left">Cancel</el-button>
-                    </template>
-                </el-form-item>
-            </el-form>
-        </el-dialog>
     </el-container>
-    <el-button-group>
-        <el-button type="primary" icon="el-icon-arrow-left">Previous Page</el-button>
-        <el-button type="primary">Next Page<i class="el-icon-arrow-right el-icon-right"></i></el-button>
-    </el-button-group>
 </div>
 </template>
 
 <script>
-import axios from "axios";
+var axios = require("axios");
 export default {
     name: "user",
     data() {
@@ -161,16 +103,6 @@ export default {
                 state: '',
                 zipcode: '',
             },
-            user_edit: {
-                name: '',
-                username: '',
-                email: '',
-                phone: '',
-                streetAddress: '',
-                city: '',
-                state: '',
-                zipcode: '',
-            }
         };
     },
     mounted() {
@@ -179,7 +111,7 @@ export default {
         // json-server --watch typiecode.json -- cd to assets folder and run this command for local api.
         var self = this;
         axios
-            .get(url)
+            .get(localurl)
             .then(function (response) {
                 self.users = response.data;
                 console.log("Data: ", response.data);
@@ -211,8 +143,8 @@ export default {
                 zipcode: this.form.zipcode,
             }
             console.log(newUser)
-            // axios.post('http://localhost:3000/users', newUser) // post request to local rest api through axios - Adds user!
-            axios.post('https://jsonplaceholder.typicode.com/users', newUser)
+            // axios.post('https://jsonplaceholder.typicode.com/users', newUser)
+            axios.post('http://localhost:3000/users', newUser) // post request to local rest api through axios - Adds user!
                 .then(function (response) {
                     console.log(response, "Success")
                     window.location.reload();
@@ -228,8 +160,9 @@ export default {
                 type: 'warning'
             }).then(() => {
                 rows.splice(index, 1);
-                // let userID = index + 1 // Requires better function to accuratley get userID
                 // axios.delete('https://jsonplaceholder.typicode.com/users/' + userID) 
+                let userID = index + 1 // Requires better function to accuratley get userID
+                axios.delete('http://localhost:3000/users/' + userID)
                 this.$message({
                     type: 'success',
                     message: 'Delete completed'
@@ -241,30 +174,9 @@ export default {
                 });
             });
         },
-        // Post/put request to Rest API through axios.
-        // handleEditUser(index, row) {
-        //     let editUser = {
-        //         name: this.user_edit.name,
-        //         username: this.user_edit.username,
-        //         email: this.user_edit.email,
-        //         phone: this.user_edit.phone,
-        //         streetAddress: this.user_edit.streetAddress,
-        //         city: this.user_edit.city,
-        //         state: this.user_edit.state,
-        //         zipcode: this.user_edit.zipcode,
-        //     }
-        //     console.log(index)
-        //     let userID = index + 1
-        //     axios.put('http://localhost:3000/users/', userID)
-        // },
         handleEditRow(index) {
-            this.users[index].edited = true,
-                this.isEditable = true
-
+            this.isEditable = true
         },
-        handleSaveRow(index) {
-            this.users[index].edited = false
-        }
     }
 }
 </script>
