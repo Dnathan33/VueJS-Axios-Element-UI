@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>Get json file</title>
+        <script src="https://unpkg.com/vue"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+        <div id="app"> 
+            <p>{{ status }}</p>
+        </div>
+        <script> 
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    status: ''
+                },
+                created: function () {
+                    this.loadData();
+                },
+                methods: {
+                    loadData: function() {
+                        this.status = 'Loading....';
+                        var vm = this;
+                        axios.get('https://jsonplaceholder.typicode.com/users')
+                        .then(function (response) {
+                            vm.status = response.data[0];
+                        })
+                        .catch( function (error) {
+                            vm.status = 'An error occured.' + error;
+                        });
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
