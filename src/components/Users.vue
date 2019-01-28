@@ -160,7 +160,7 @@ export default {
                 type: 'warning'
             }).then(() => {
                 rows.splice(index, 1);
-                axios.delete('https://jsonplaceholder.typicode.com/users/' + userID) 
+                // axios.delete('https://jsonplaceholder.typicode.com/users/' + userID) 
                 // let userID = index + 1
                 // axios.delete('http://localhost:3000/users/' + userID)
                 this.$message({
