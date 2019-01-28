@@ -2,9 +2,9 @@
 Developed a Web Application using VueJS and utilized Axios to make REST API calls to fetch and post data - Implemented CRUD functionality.
 
 # Getting Started
-## Installation
---> Install Axios - npm install axios<br/>
---> Install Element-UI - install element-ui -S
+## Installation through npm
+Install Axios --> npm install axios<br/>
+Install Element-UI --> npm install element-ui -S
 
 ## Usage Element-UI - inside main.js
 import axios from 'axios'<br/>
