@@ -17,7 +17,7 @@
                 <!-- @selection-change="handleSelectionChange"> -->
                 <el-table-column prop="id" width="40">
                 </el-table-column>
-                <el-table-column label="Name">
+                <el-table-column label="Full Name">
                     <template slot-scope="scope">
                         <el-input v-model="scope.row.name" :readonly="disabled"></el-input>
                     </template>
@@ -176,6 +176,7 @@ export default {
     mounted() {
         const url = "https://jsonplaceholder.typicode.com/users";
         const localurl = 'http://localhost:3000/users'
+        // json-server --watch typiecode.json -- cd to assets folder and run this command for local api.
         var self = this;
         axios
             .get(url)
@@ -229,7 +230,6 @@ export default {
                 rows.splice(index, 1);
                 // let userID = index + 1 // Requires better function to accuratley get userID
                 // axios.delete('https://jsonplaceholder.typicode.com/users/' + userID) 
-                console.log(userID)
                 this.$message({
                     type: 'success',
                     message: 'Delete completed'
